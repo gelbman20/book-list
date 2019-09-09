@@ -6,4 +6,64 @@ block page
   section.section.section-lg.bg-default.text-center
     .container
       h2 Book List
-      .row.row-30
+      #books.books
+
+        .edit-modal
+          h3 Edit Item
+          .form-wrap
+            label.form-label-outside( for='edit-book-name' ) Enter Book Name
+            input.form-input#edit-book-name( type='text' v-model='editBook.name')
+          .form-wrap
+            label.form-label-outside( for='edit-book-description' ) Enter Book Description
+            input.form-input#edit-book-description( type='text' v-model='editBook.description')
+          .form-wrap
+            label.form-label-outside( for='edit-book-authors' ) Enter Book authors using commas, First and Last name separated by a space. Example: Andrew Helever, Ivan Pochesnuy
+            input.form-input#edit-book-authors( type='text' v-model='editBook.authors')
+          .form-wrap
+            label.form-label-outside( for='edit-book-genres' ) Enter Book Genres using commas. Example: history, fantastic
+            input.form-input#edit-book-genres( type='text' v-model='editBook.genres' )
+          .form-wrap
+            .group
+              button.button.button-primary.button-ujarak( @click="saveItem()") Save
+              button.button.button-default.button-ujarak( @click="saveItem()" onclick='closeModal(".edit-modal")' ) Save and Close
+
+        .row.row-30
+          .col-12.text-left
+            h3 Add New Item
+            .form-wrap
+              label.form-label-outside( for='book-name' ) Enter Book Name
+              input.form-input#book-name( type='text' v-model='newBook.name' )
+            .form-wrap
+              label.form-label-outside( for='book-description' ) Enter Book Description
+              input.form-input#book-description( type='text' v-model='newBook.description' )
+            .form-wrap
+              label.form-label-outside( for='book-authors' ) Enter Book authors using commas, First and Last name separated by a space. Example: Andrew Helever, Ivan Pochesnuy
+              input.form-input#book-authors( type='text' v-model='newBook.authors' )
+            .form-wrap
+              label.form-label-outside( for='book-authors' ) Enter Book Genres using commas. Example: history, fantastic
+              input.form-input#book-genres( type='text' v-model='newBook.genres' )
+            .form-wrap
+              button.button.button-primary.button-ujarak( @click="addItem()" ) Add New Books
+            p {{newBook}}
+
+          .col-md-6.col-lg-4( v-for='book in books' )
+            .book
+              .book-control
+                ul.book-control-list
+                  li.book-control-item
+                    a.book-control-link( href='#' @click.prevent @click='editItem(book)' )
+                      span.icon.fa-edit
+                  li.book-control-item
+                    a.book-control-link.book-control-link-danger( href='#' @click.prevent @click="deleteItem(book)" )
+                      span.icon.fa-trash
+              .book-name: h4 {{book.name}}
+              .book-description: p(contenteditable='true') {{book.description}}
+              .book-authors
+                h5.book-authors-title Authors:
+                ul.book-author-list: li( v-for='author in book.authors' )
+                  span.book-author-first-name {{author.firstName}}
+                  span.book-author-last-name {{author.lastName}}
+              hr.book-divider
+              .book-genres: ul.book-genres-list: li.book-genre( v-for='genre in book.genres' ): a.book-genre-link(:href=  `'#' + genre`) # {{genre}}
+
+

@@ -72,7 +72,7 @@
 
 // Appearance style
 .button-default {
-  @include btn-variant($gray-300, $gray-700, $gray-700, $white, $primary, $primary);
+  @include btn-variant($gray-100, $gray-700, $gray-700, $white, $primary, $primary);
 }
 
 .button-gray-100 {

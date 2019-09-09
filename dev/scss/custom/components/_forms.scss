@@ -39,9 +39,8 @@ input:-webkit-autofill ~ .form-validation {
 }
 
 // Form wrap offset
-.form-wrap + * {
-  margin-top: 20px;
-}
+* + .form-wrap { margin-top: 20px; }
+.form-wrap + * { margin-top: 20px; }
 
 // Form input
 .form-input {
