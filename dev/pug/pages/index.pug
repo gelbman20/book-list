@@ -8,8 +8,8 @@ block page
       h2 Book List
       #books.books
 
-        .edit-modal
-          h3 Edit Item
+        .modal-custom.edit-modal
+          h3 Edit Book
           .form-wrap
             label.form-label-outside( for='edit-book-name' ) Enter Book Name
             input.form-input#edit-book-name( type='text' v-model='editBook.name')
@@ -27,25 +27,31 @@ block page
               button.button.button-primary.button-ujarak( @click="saveItem()") Save
               button.button.button-default.button-ujarak( @click="saveItem()" onclick='closeModal(".edit-modal")' ) Save and Close
 
-        .row.row-30
-          .col-12.text-left
-            h3 Add New Item
-            .form-wrap
-              label.form-label-outside( for='book-name' ) Enter Book Name
-              input.form-input#book-name( type='text' v-model='newBook.name' )
-            .form-wrap
-              label.form-label-outside( for='book-description' ) Enter Book Description
-              input.form-input#book-description( type='text' v-model='newBook.description' )
-            .form-wrap
-              label.form-label-outside( for='book-authors' ) Enter Book authors using commas, First and Last name separated by a space. Example: Andrew Helever, Ivan Pochesnuy
-              input.form-input#book-authors( type='text' v-model='newBook.authors' )
-            .form-wrap
-              label.form-label-outside( for='book-authors' ) Enter Book Genres using commas. Example: history, fantastic
-              input.form-input#book-genres( type='text' v-model='newBook.genres' )
-            .form-wrap
-              button.button.button-primary.button-ujarak( @click="addItem()" ) Add New Books
-            p {{newBook}}
 
+        .unit.align-items-center
+          .unit-left: h3.text-left Add New Item
+          .unit-body: a.icon.icon-xl.icon-circle.icon-primary.fa-plus(href='#' @click.prevent onclick='openModal(".add-modal")')
+
+        .modal-custom.add-modal
+          h3 Add New Book
+          .form-wrap
+            label.form-label-outside( for='book-name' ) Enter Book Name
+            input.form-input#book-name( type='text' v-model='newBook.name' )
+          .form-wrap
+            label.form-label-outside( for='book-description' ) Enter Book Description
+            input.form-input#book-description( type='text' v-model='newBook.description' )
+          .form-wrap
+            label.form-label-outside( for='book-authors' ) Enter Book authors using commas, First and Last name separated by a space. Example: Andrew Helever, Ivan Pochesnuy
+            input.form-input#book-authors( type='text' v-model='newBook.authors' )
+          .form-wrap
+            label.form-label-outside( for='book-authors' ) Enter Book Genres using commas. Example: history, fantastic
+            input.form-input#book-genres( type='text' v-model='newBook.genres' )
+          .form-wrap
+            .group
+              button.button.button-primary.button-ujarak( @click.prevent @click="addItem()" ) Add New Books
+              button.button.button-default.button-ujarak( @click.prevent onclick='closeModal(".add-modal")' ) Close
+
+        .row.row-30
           .col-md-6.col-lg-4( v-for='book in books' )
             .book
               .book-control

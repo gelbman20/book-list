@@ -8,7 +8,6 @@
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto+Slab:700%7CRoboto:400,700">
     <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css">
     <link rel="stylesheet" href="css/fonts.css">
     <link rel="stylesheet" href="css/style.css">
     <style>.ie-panel{display: none;background: #212121;padding: 10px 0;box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3);clear: both;text-align:center;position: relative;z-index: 1;} html.ie-10 .ie-panel, html.lt-ie-10 .ie-panel {display: block;}</style>
@@ -21,8 +20,8 @@
         <div class="container">
           <h2>Book List</h2>
           <div class="books" id="books">
-            <div class="edit-modal">
-              <h3>Edit Item</h3>
+            <div class="modal-custom edit-modal">
+              <h3>Edit Book</h3>
               <div class="form-wrap">
                 <label class="form-label-outside" for="edit-book-name">Enter Book Name</label>
                 <input class="form-input" id="edit-book-name" type="text" v-model="editBook.name">
@@ -46,30 +45,38 @@
                 </div>
               </div>
             </div>
-            <div class="row row-30">
-              <div class="col-12 text-left">
-                <h3>Add New Item</h3>
-                <div class="form-wrap">
-                  <label class="form-label-outside" for="book-name">Enter Book Name</label>
-                  <input class="form-input" id="book-name" type="text" v-model="newBook.name">
-                </div>
-                <div class="form-wrap">
-                  <label class="form-label-outside" for="book-description">Enter Book Description</label>
-                  <input class="form-input" id="book-description" type="text" v-model="newBook.description">
-                </div>
-                <div class="form-wrap">
-                  <label class="form-label-outside" for="book-authors">Enter Book authors using commas, First and Last name separated by a space. Example: Andrew Helever, Ivan Pochesnuy</label>
-                  <input class="form-input" id="book-authors" type="text" v-model="newBook.authors">
-                </div>
-                <div class="form-wrap">
-                  <label class="form-label-outside" for="book-authors">Enter Book Genres using commas. Example: history, fantastic</label>
-                  <input class="form-input" id="book-genres" type="text" v-model="newBook.genres">
-                </div>
-                <div class="form-wrap">
-                  <button class="button button-primary button-ujarak" @click="addItem()">Add New Books</button>
-                </div>
-                <p>{{newBook}}</p>
+            <div class="unit align-items-center">
+              <div class="unit-left">
+                <h3 class="text-left">Add New Item</h3>
               </div>
+              <div class="unit-body"><a class="icon icon-xl icon-circle icon-primary fa-plus" href="#" @click.prevent onclick="openModal(&quot;.add-modal&quot;)"></a></div>
+            </div>
+            <div class="modal-custom add-modal">
+              <h3>Add New Book</h3>
+              <div class="form-wrap">
+                <label class="form-label-outside" for="book-name">Enter Book Name</label>
+                <input class="form-input" id="book-name" type="text" v-model="newBook.name">
+              </div>
+              <div class="form-wrap">
+                <label class="form-label-outside" for="book-description">Enter Book Description</label>
+                <input class="form-input" id="book-description" type="text" v-model="newBook.description">
+              </div>
+              <div class="form-wrap">
+                <label class="form-label-outside" for="book-authors">Enter Book authors using commas, First and Last name separated by a space. Example: Andrew Helever, Ivan Pochesnuy</label>
+                <input class="form-input" id="book-authors" type="text" v-model="newBook.authors">
+              </div>
+              <div class="form-wrap">
+                <label class="form-label-outside" for="book-authors">Enter Book Genres using commas. Example: history, fantastic</label>
+                <input class="form-input" id="book-genres" type="text" v-model="newBook.genres">
+              </div>
+              <div class="form-wrap">
+                <div class="group">
+                  <button class="button button-primary button-ujarak" @click.prevent @click="addItem()">Add New Books</button>
+                  <button class="button button-default button-ujarak" @click.prevent onclick="closeModal(&quot;.add-modal&quot;)">Close</button>
+                </div>
+              </div>
+            </div>
+            <div class="row row-30">
               <div class="col-md-6 col-lg-4" v-for="book in books">
                 <div class="book">
                   <div class="book-control">
@@ -104,7 +111,6 @@
       </section>
     </div>
     <script src="js/vue.js"></script>
-    <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
     <script src="js/script.js"></script>
   </body>
 </html>

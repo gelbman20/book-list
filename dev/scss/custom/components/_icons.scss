@@ -16,10 +16,38 @@
   }
 }
 
+.icon-circle {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  line-height: 44px;
+  text-align: center;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
 // Alternate icons
 .icon-default { color: $gray-700; }
 
-.icon-primary { color: $primary; }
+.icon-primary {
+  color: $primary;
+
+  &.icon-circle {
+    &, &:focus, &:active {
+      color: $white;
+      background-color: $primary;
+    }
+  }
+}
+
+a.icon-primary {
+  &.icon-circle {
+    &:hover {
+      color: $white;
+      background-color: $success-color;
+    }
+  }
+}
 
 // Icon Shapes
 .icon-circle { border-radius: 50%; }
@@ -30,3 +58,5 @@
 .icon-sm { font-size: 16px; }
 
 .icon-lg { font-size: 20px; }
+
+.icon-lg { font-size: 25px; }

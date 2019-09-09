@@ -1,9 +1,28 @@
-/** @section Bootstrap Modal */
+/** @section Modal */
 
-.ios {
-  .modal-open {
-    position: fixed;
-    width: 100%;
-    height: 100%;
+.modal-custom {
+  z-index: 1000;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  max-width: 470px;
+  padding: 30px;
+  text-align: left;
+  background-color: $white;
+  border-radius: 15px;
+  box-shadow: $shadow-area-1;
+  transform: translate(-50%, -50%);
+  transition: .3s ease-out all;
+  margin-top: 20px;
+  opacity: 0;
+  pointer-events: none;
+  max-height: calc(100vh - 100px);
+  overflow: hidden;
+  overflow-y: scroll;
+
+  &.active {
+    margin-top: 0;
+    opacity: 1;
+    pointer-events: auto;
   }
 }
