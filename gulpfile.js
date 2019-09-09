@@ -80,7 +80,7 @@ let copy = () => {
       'dev/**/fonts/**/*.{otf,eot,svg,ttf,woff,woff2}',
       'dev/**/images/**/*',
       'dev/**/js/**/script.js',
-      'dev/**/js/**/core.min.js',
+      'dev/**/js/**/vue.js',
       'dev/**/**/*.html'
     ])
     .pipe(gulp.dest('docs/'))
