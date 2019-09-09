@@ -1,0 +1,29 @@
+/** @section Utilities custom */
+
+// Rights
+p.rights {
+  font-size: 14px;
+  color: $body-color;
+
+  a {
+    color: inherit;
+
+    &:hover { color: $primary; }
+  }
+}
+
+
+// JSColor Workaround
+[style*='z-index: 1000;'] { z-index: $zindex-layout-panel + 1 !important; }
+
+.text-block {
+  > * {
+    margin-left: .125em;
+    margin-right: .125em;
+  }
+}
+
+// Privacy link
+.privacy-link { display: inline-block; }
+
+* + .privacy-link { margin-top: 30px; }

@@ -1,0 +1,14 @@
+/** @section Images */
+
+// Standard img style
+img {
+  display: inline-block;
+  max-width: 100%;
+  height: auto;
+}
+
+.img-responsive { width: 100%; }
+
+// Offset
+h3 + figure { margin-top: 20px; }
+h3 + img { margin-top: 42px; }

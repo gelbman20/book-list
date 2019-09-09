@@ -1,0 +1,20 @@
+# Trash are ignored everywhere
+*.map
+*.db
+
+# Ignored all in root folder
+/*
+
+# Compulsory files
+!/.gitignore
+!/gulpfile.js
+!/package.json
+
+# Compulsory folders
+!/dev
+!/docs
+
+# Ignored inside dev folders and files
+/dev/*.html
+/dev/css/*.css
+/dev/css/*.map
