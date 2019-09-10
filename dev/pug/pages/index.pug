@@ -8,30 +8,7 @@ block page
       h2 Book List
       #books.books
 
-        .modal-custom.edit-modal
-          h3 Edit Book
-          .form-wrap
-            label.form-label-outside( for='edit-book-name' ) Enter Book Name
-            input.form-input#edit-book-name( type='text' v-model='editBook.name')
-          .form-wrap
-            label.form-label-outside( for='edit-book-description' ) Enter Book Description
-            input.form-input#edit-book-description( type='text' v-model='editBook.description')
-          .form-wrap
-            label.form-label-outside( for='edit-book-authors' ) Enter Book authors using commas, First and Last name separated by a space. Example: Andrew Helever, Ivan Pochesnuy
-            input.form-input#edit-book-authors( type='text' v-model='editBook.authors')
-          .form-wrap
-            label.form-label-outside( for='edit-book-genres' ) Enter Book Genres using commas. Example: history, fantastic
-            input.form-input#edit-book-genres( type='text' v-model='editBook.genres' )
-          .form-wrap
-            .group
-              button.button.button-primary.button-ujarak( @click="saveItem()") Save
-              button.button.button-default.button-ujarak( @click="saveItem()" onclick='closeModal(".edit-modal")' ) Save and Close
-
-
-        .unit.align-items-center
-          .unit-left: h3.text-left Add New Item
-          .unit-body: a.icon.icon-xl.icon-circle.icon-primary.fa-plus(href='#' @click.prevent onclick='openModal(".add-modal")')
-
+        // Modal Add Book
         .modal-custom.add-modal
           h3 Add New Book
           .form-wrap
@@ -40,17 +17,85 @@ block page
           .form-wrap
             label.form-label-outside( for='book-description' ) Enter Book Description
             input.form-input#book-description( type='text' v-model='newBook.description' )
+          .form-wrap( v-for='author in authorsAll' )
+            input( type='checkbox' :id='`checkbox-${author.id}`' :value='`${author.firstName} ${author.lastName}`' v-model='newBook.authors' )
+            label( :for='`checkbox-${author.id}`' ) {{ `${author.firstName} ${author.lastName}` }}
           .form-wrap
-            label.form-label-outside( for='book-authors' ) Enter Book authors using commas, First and Last name separated by a space. Example: Andrew Helever, Ivan Pochesnuy
-            input.form-input#book-authors( type='text' v-model='newBook.authors' )
-          .form-wrap
-            label.form-label-outside( for='book-authors' ) Enter Book Genres using commas. Example: history, fantastic
+            label.form-label-outside( for='book-genres' ) Enter Book Genres using commas. Example: history, fantastic
             input.form-input#book-genres( type='text' v-model='newBook.genres' )
           .form-wrap
             .group
               button.button.button-primary.button-ujarak( @click.prevent @click="addItem()" ) Add New Books
               button.button.button-default.button-ujarak( @click.prevent onclick='closeModal(".add-modal")' ) Close
 
+        // Modal Edit Book
+        .modal-custom.edit-modal
+          h3 Edit Book
+          .form-wrap
+            label.form-label-outside( for='edit-book-name' ) Enter Book Name
+            input.form-input#edit-book-name( type='text' v-model='editBook.name')
+          .form-wrap
+            label.form-label-outside( for='edit-book-description' ) Enter Book Description
+            input.form-input#edit-book-description( type='text' v-model='editBook.description')
+          .form-wrap( v-for='author in authorsAll' )
+            input( type='checkbox' :id='`checkbox-${author.id}`' :value='`${author.firstName} ${author.lastName}`' v-model='editBook.authors' )
+            label( :for='`checkbox-${author.id}`' ) {{ `${author.firstName} ${author.lastName}` }}
+          .form-wrap
+            label.form-label-outside( for='edit-book-genres' ) Enter Book Genres using commas. Example: history, fantastic
+            input.form-input#edit-book-genres( type='text' v-model='editBook.genres' )
+          .form-wrap
+            .group
+              button.button.button-primary.button-ujarak( @click="saveItem()") Save
+              button.button.button-default.button-ujarak( @click="saveItem()" onclick='closeModal(".edit-modal")' ) Save and Close
+
+        // Modal Edit Author
+        .modal-custom.edit-author-modal
+          h3 Edit Author
+          .form-wrap
+            label.form-label-outside( for='edit-author-name' ) Edit First Name
+            input.form-input#edit-author-name( type='text' v-model='copyAuthor.firstName' )
+          .form-wrap
+            label.form-label-outside( for='edit-author-last-name' ) Edit Last Name
+            input.form-input#edit-author-last-name( type='text' v-model='copyAuthor.lastName' )
+          .form-wrap
+            .group
+              button.button.button-primary.button-ujarak( @click="saveAuthor()") Save
+              button.button.button-default.button-ujarak( onclick='closeModal(".edit-author-modal")' ) Close
+
+        // Modal Add New Author
+        .modal-custom.add-author-modal
+          h3 Add New Author
+          .form-wrap
+            label.form-label-outside( for='add-author-name' ) Add new Author First Name
+            input.form-input#add-author-name( type='text' v-model='newAuthor.firstName' )
+          .form-wrap
+            label.form-label-outside( for='add-author-last-name' ) Add new Author Last Name
+            input.form-input#add-author-last-name( type='text' v-model='newAuthor.lastName' )
+          .form-wrap
+            .group
+              button.button.button-primary.button-ujarak( @click="addAuthor(newAuthor.firstName, newAuthor.lastName)") Save
+              button.button.button-default.button-ujarak( @click.prevent onclick='closeModal(".add-author-modal")' ) Close
+
+        .row.text-left.row-30
+          .col-12
+            .unit.align-items-center
+              .unit-left: h3.text-left Add New Author
+              .unit-body: a.icon.icon-xl.icon-circle.icon-primary.fa-plus(href='#' @click.prevent onclick='openModal(".add-author-modal")')
+          .col-12
+            h3 All Authors
+            .book-authors
+              ul.book-author-list-inline
+                li( v-for=' author in authorsAll ' )
+                  span.book-author-first-name {{ author.firstName }}
+                  span.book-author-last-name {{ author.lastName }}
+                  a.book-author-control.book-author-edit.fa-edit( href='#' @click.prevent @click='editAuthor(author)' onclick='openModal(".edit-author-modal")' )
+                  a.book-author-control.book-author-delete.fa-trash-o( href='#' @click.prevent @click='deleteAuthor(author)' )
+
+        hr
+
+        .unit.align-items-center
+          .unit-left: h3.text-left Add New Item
+          .unit-body: a.icon.icon-xl.icon-circle.icon-primary.fa-plus(href='#' @click.prevent onclick='openModal(".add-modal")')
         .row.row-30
           .col-md-6.col-lg-4( v-for='book in books' )
             .book

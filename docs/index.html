@@ -20,6 +20,33 @@
         <div class="container">
           <h2>Book List</h2>
           <div class="books" id="books">
+            <!-- Modal Add Book-->
+            <div class="modal-custom add-modal">
+              <h3>Add New Book</h3>
+              <div class="form-wrap">
+                <label class="form-label-outside" for="book-name">Enter Book Name</label>
+                <input class="form-input" id="book-name" type="text" v-model="newBook.name">
+              </div>
+              <div class="form-wrap">
+                <label class="form-label-outside" for="book-description">Enter Book Description</label>
+                <input class="form-input" id="book-description" type="text" v-model="newBook.description">
+              </div>
+              <div class="form-wrap" v-for="author in authorsAll">
+                <input type="checkbox" :id="`checkbox-${author.id}`" :value="`${author.firstName} ${author.lastName}`" v-model="newBook.authors">
+                <label :for="`checkbox-${author.id}`">{{ `${author.firstName} ${author.lastName}` }}</label>
+              </div>
+              <div class="form-wrap">
+                <label class="form-label-outside" for="book-genres">Enter Book Genres using commas. Example: history, fantastic</label>
+                <input class="form-input" id="book-genres" type="text" v-model="newBook.genres">
+              </div>
+              <div class="form-wrap">
+                <div class="group">
+                  <button class="button button-primary button-ujarak" @click.prevent @click="addItem()">Add New Books</button>
+                  <button class="button button-default button-ujarak" @click.prevent onclick="closeModal(&quot;.add-modal&quot;)">Close</button>
+                </div>
+              </div>
+            </div>
+            <!-- Modal Edit Book-->
             <div class="modal-custom edit-modal">
               <h3>Edit Book</h3>
               <div class="form-wrap">
@@ -30,9 +57,9 @@
                 <label class="form-label-outside" for="edit-book-description">Enter Book Description</label>
                 <input class="form-input" id="edit-book-description" type="text" v-model="editBook.description">
               </div>
-              <div class="form-wrap">
-                <label class="form-label-outside" for="edit-book-authors">Enter Book authors using commas, First and Last name separated by a space. Example: Andrew Helever, Ivan Pochesnuy</label>
-                <input class="form-input" id="edit-book-authors" type="text" v-model="editBook.authors">
+              <div class="form-wrap" v-for="author in authorsAll">
+                <input type="checkbox" :id="`checkbox-${author.id}`" :value="`${author.firstName} ${author.lastName}`" v-model="editBook.authors">
+                <label :for="`checkbox-${author.id}`">{{ `${author.firstName} ${author.lastName}` }}</label>
               </div>
               <div class="form-wrap">
                 <label class="form-label-outside" for="edit-book-genres">Enter Book Genres using commas. Example: history, fantastic</label>
@@ -45,36 +72,66 @@
                 </div>
               </div>
             </div>
+            <!-- Modal Edit Author-->
+            <div class="modal-custom edit-author-modal">
+              <h3>Edit Author</h3>
+              <div class="form-wrap">
+                <label class="form-label-outside" for="edit-author-name">Edit First Name</label>
+                <input class="form-input" id="edit-author-name" type="text" v-model="copyAuthor.firstName">
+              </div>
+              <div class="form-wrap">
+                <label class="form-label-outside" for="edit-author-last-name">Edit Last Name</label>
+                <input class="form-input" id="edit-author-last-name" type="text" v-model="copyAuthor.lastName">
+              </div>
+              <div class="form-wrap">
+                <div class="group">
+                  <button class="button button-primary button-ujarak" @click="saveAuthor()">Save</button>
+                  <button class="button button-default button-ujarak" onclick="closeModal(&quot;.edit-author-modal&quot;)">Close</button>
+                </div>
+              </div>
+            </div>
+            <!-- Modal Add New Author-->
+            <div class="modal-custom add-author-modal">
+              <h3>Add New Author</h3>
+              <div class="form-wrap">
+                <label class="form-label-outside" for="add-author-name">Add new Author First Name</label>
+                <input class="form-input" id="add-author-name" type="text" v-model="newAuthor.firstName">
+              </div>
+              <div class="form-wrap">
+                <label class="form-label-outside" for="add-author-last-name">Add new Author Last Name</label>
+                <input class="form-input" id="add-author-last-name" type="text" v-model="newAuthor.lastName">
+              </div>
+              <div class="form-wrap">
+                <div class="group">
+                  <button class="button button-primary button-ujarak" @click="addAuthor(newAuthor.firstName, newAuthor.lastName)">Save</button>
+                  <button class="button button-default button-ujarak" @click.prevent onclick="closeModal(&quot;.add-author-modal&quot;)">Close</button>
+                </div>
+              </div>
+            </div>
+            <div class="row text-left row-30">
+              <div class="col-12">
+                <div class="unit align-items-center">
+                  <div class="unit-left">
+                    <h3 class="text-left">Add New Author</h3>
+                  </div>
+                  <div class="unit-body"><a class="icon icon-xl icon-circle icon-primary fa-plus" href="#" @click.prevent onclick="openModal(&quot;.add-author-modal&quot;)"></a></div>
+                </div>
+              </div>
+              <div class="col-12">
+                <h3>All Authors</h3>
+                <div class="book-authors">
+                  <ul class="book-author-list-inline">
+                    <li v-for=" author in authorsAll "><span class="book-author-first-name">{{ author.firstName }}</span><span class="book-author-last-name">{{ author.lastName }}</span><a class="book-author-control book-author-edit fa-edit" href="#" @click.prevent @click="editAuthor(author)" onclick="openModal(&quot;.edit-author-modal&quot;)"></a><a class="book-author-control book-author-delete fa-trash-o" href="#" @click.prevent @click="deleteAuthor(author)"></a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <hr>
             <div class="unit align-items-center">
               <div class="unit-left">
                 <h3 class="text-left">Add New Item</h3>
               </div>
               <div class="unit-body"><a class="icon icon-xl icon-circle icon-primary fa-plus" href="#" @click.prevent onclick="openModal(&quot;.add-modal&quot;)"></a></div>
-            </div>
-            <div class="modal-custom add-modal">
-              <h3>Add New Book</h3>
-              <div class="form-wrap">
-                <label class="form-label-outside" for="book-name">Enter Book Name</label>
-                <input class="form-input" id="book-name" type="text" v-model="newBook.name">
-              </div>
-              <div class="form-wrap">
-                <label class="form-label-outside" for="book-description">Enter Book Description</label>
-                <input class="form-input" id="book-description" type="text" v-model="newBook.description">
-              </div>
-              <div class="form-wrap">
-                <label class="form-label-outside" for="book-authors">Enter Book authors using commas, First and Last name separated by a space. Example: Andrew Helever, Ivan Pochesnuy</label>
-                <input class="form-input" id="book-authors" type="text" v-model="newBook.authors">
-              </div>
-              <div class="form-wrap">
-                <label class="form-label-outside" for="book-authors">Enter Book Genres using commas. Example: history, fantastic</label>
-                <input class="form-input" id="book-genres" type="text" v-model="newBook.genres">
-              </div>
-              <div class="form-wrap">
-                <div class="group">
-                  <button class="button button-primary button-ujarak" @click.prevent @click="addItem()">Add New Books</button>
-                  <button class="button button-default button-ujarak" @click.prevent onclick="closeModal(&quot;.add-modal&quot;)">Close</button>
-                </div>
-              </div>
             </div>
             <div class="row row-30">
               <div class="col-md-6 col-lg-4" v-for="book in books">

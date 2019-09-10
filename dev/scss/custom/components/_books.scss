@@ -89,12 +89,23 @@
 .book-authors {
   font-size: 14px;
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
   @include spacing(5px)
 }
 
 .book-authors-title {
   display: inline-block;
+}
+
+.book-author-list-inline {
+  > li {
+    display: inline-block;
+    padding: 7px 10px;
+    background-color: $gray-100;
+    border-radius: 4px;
+    vertical-align: top;
+    margin-right: 15px;
+  }
 }
 
 .book-author-list {
@@ -112,6 +123,20 @@
       }
     }
   }
+}
+
+.book-author-control {
+  display: inline-block;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.book-author-delete {
+  @include link($danger-color, $black)
+}
+
+.book-author-edit {
+  @include link($success-color, $black)
 }
 
 .book-author-first-name,

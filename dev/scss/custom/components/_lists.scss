@@ -39,6 +39,7 @@
 
 .list-inline-md {
   @include spacing(20px, 8px);
+  vertical-align: middle;
 
   @include media-breakpoint-up(lg) {
     @include spacingX(30px);

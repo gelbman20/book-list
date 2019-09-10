@@ -65,8 +65,8 @@ function watchFiles(done) {
   gulp.watch('dev/scss/**/*.scss', gulp.series(compileSass));
   gulp.watch('dev/css/**/*.css', browsersync.reload);
   gulp.watch('dev/pug/**/*.pug', gulp.series(compilePug));
-  gulp.watch('dev/js/script.js', browsersync.reload);
   gulp.watch('dev/*.html', browsersync.reload);
+  gulp.watch('dev/js/*.js', browsersync.reload);
   done();
 }
 
