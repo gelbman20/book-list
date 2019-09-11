@@ -44,7 +44,7 @@ block page
                 input( type='checkbox' :id='`checkbox-edit-${author.id}`' :value='`${author.firstName} ${author.lastName}`' v-model='editBook.authors' )
                 label( :for='`checkbox-edit-${author.id}`' ) {{ `${author.firstName} ${author.lastName}` }}
             .form-wrap
-              label.form-label-outside( for='checkbox-group-3' ) Check Author or Authors
+              label.form-label-outside( for='checkbox-group-3' ) Check Genre or Genres
               .checkbox-group#checkbox-group-3( v-for='genre in genresAll' )
                 input( type='checkbox' :id='`checkbox-genre-edit-${genre.id}`' :value='`${genre.name}`' v-model='editBook.genres' )
                 label( :for='`checkbox-genre-edit-${genre.id}`' ) {{ `${genre.name}` }}

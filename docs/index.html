@@ -70,7 +70,7 @@
               </div>
             </div>
             <div class="form-wrap">
-              <label class="form-label-outside" for="checkbox-group-3">Check Author or Authors</label>
+              <label class="form-label-outside" for="checkbox-group-3">Check Genre or Genres</label>
               <div class="checkbox-group" id="checkbox-group-3" v-for="genre in genresAll">
                 <input type="checkbox" :id="`checkbox-genre-edit-${genre.id}`" :value="`${genre.name}`" v-model="editBook.genres">
                 <label :for="`checkbox-genre-edit-${genre.id}`">{{ `${genre.name}` }}</label>
