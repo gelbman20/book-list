@@ -25,6 +25,8 @@ input:-webkit-autofill ~ .form-validation {
 .form-wrap {
   position: relative;
 
+
+
   &.has-error {
     .form-input {
       border-color: $form-feedback-invalid-color;
@@ -36,6 +38,16 @@ input:-webkit-autofill ~ .form-validation {
       border-color: $form-feedback-focus-color;
     }
   }
+}
+
+.checkbox-group {
+  input[type='checkbox'],
+  input[type='checkbox'] + label {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  > * + * { margin-top: 3px; }
 }
 
 // Form wrap offset
@@ -57,6 +69,9 @@ input:-webkit-autofill ~ .form-validation {
   border-radius: $form-input-border-radius;
   -webkit-appearance: none;
   transition: .3s ease-in-out;
+  background-repeat: no-repeat;
+  background-position: calc(100% - 8px) calc(0% + #{$form-input-height / 2} - 10px);
+  background-size: 18px;
 
   &.has-focus {
     border-color: $form-feedback-focus-color;
@@ -64,6 +79,7 @@ input:-webkit-autofill ~ .form-validation {
 
   &.has-error {
     border-color: $form-feedback-invalid-color;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23dc3545' viewBox='-2 -2 7 7'%3e%3cpath stroke='%23dc3545' d='M0 0l3 3m0-3L0 3'/%3e%3ccircle r='.5'/%3e%3ccircle cx='3' r='.5'/%3e%3ccircle cy='3' r='.5'/%3e%3ccircle cx='3' cy='3' r='.5'/%3e%3c/svg%3E");
   }
 
   @if ($form-input-border) {
