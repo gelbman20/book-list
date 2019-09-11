@@ -35,8 +35,10 @@
               </div>
             </div>
             <div class="form-wrap">
-              <label class="form-label-outside" for="add-book-genres">Enter Book Genres using commas. Example: history, fantastic</label>
-              <input class="form-input" id="add-book-genres" type="text" @focus="focus(newBook.genres, &quot;#add-book-genres&quot;)" @input="validate(newBook.genres, &quot;#add-book-genres&quot;)" @blur="blur(newBook.genres, &quot;#add-book-genres&quot;)" v-model="newBook.genres">
+              <div class="checkbox-group" v-for="genre in genresAll">
+                <input type="checkbox" :id="`checkbox-genre-${genre.id}`" :value="`${genre.name}`" v-model="newBook.genres">
+                <label :for="`checkbox-genre-${genre.id}`">{{ `${genre.name}` }}</label>
+              </div>
             </div>
             <div class="form-wrap">
               <div class="group">
@@ -65,12 +67,14 @@
               </div>
             </div>
             <div class="form-wrap">
-              <label class="form-label-outside" for="edit-book-genres">Enter Book Genres using commas. Example: history, fantastic</label>
-              <input class="form-input" id="edit-book-genres" type="text" v-model="editBook.genres">
+              <div class="checkbox-group" v-for="genre in genresAll">
+                <input type="checkbox" :id="`checkbox-genre-edit-${genre.id}`" :value="`${genre.name}`" v-model="editBook.genres">
+                <label :for="`checkbox-genre-edit-${genre.id}`">{{ `${genre.name}` }}</label>
+              </div>
             </div>
             <div class="form-wrap">
               <div class="group">
-                <button class="button button-primary button-ujarak" @click="saveItem()">Save</button>
+                <button class="button button-primary button-ujarak" @click="saveBook()">Save</button>
                 <button class="button button-default button-ujarak" onclick="closeModal(&quot;.edit-modal&quot;)">Close</button>
               </div>
             </div>
@@ -116,10 +120,61 @@
             </div>
           </div>
         </div>
+        <!-- Modal Edit Genre-->
+        <div class="modal-custom edit-genre-modal">
+          <div class="modal-custom-inner">
+            <h3>Edit Genre</h3>
+            <div class="form-wrap">
+              <label class="form-label-outside" for="edit-genre-name">Edit Genre</label>
+              <input class="form-input" id="edit-genre-name" type="text" v-model="copyGenre.name">
+            </div>
+            <div class="form-wrap">
+              <div class="group">
+                <button class="button button-primary button-ujarak" @click="saveGenre()">Save</button>
+                <button class="button button-default button-ujarak" onclick="closeModal(&quot;.edit-genre-modal&quot;)">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Modal Add New Genre-->
+        <div class="modal-custom add-genre-modal">
+          <div class="modal-custom-inner">
+            <h3>Add New Genre</h3>
+            <div class="form-wrap">
+              <label class="form-label-outside" for="add-genre-name">Add new Author First Name</label>
+              <input class="form-input" id="add-genre-name" @focus="focus(newGenre.name, &quot;#add-genre-name&quot;)" @input="validate(newGenre.name, &quot;#add-genre-name&quot;)" @blur="blur(newGenre.name, &quot;#add-genre-name&quot;)" type="text" v-model="newGenre.name">
+            </div>
+            <div class="form-wrap">
+              <div class="group">
+                <button class="button button-primary button-ujarak" @click="addGenre(newGenre.name)">Save</button>
+                <button class="button button-default button-ujarak" @click.prevent onclick="closeModal(&quot;.add-genre-modal&quot;)">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
         <!-- Book List-->
         <section class="section section-lg bg-default text-center">
           <div class="container">
             <h2>Book List</h2>
+            <div class="row row-30 text-left">
+              <div class="col-12">
+                <div class="unit align-items-center">
+                  <div class="unit-left">
+                    <h3 class="text-left">Add New Genre</h3>
+                  </div>
+                  <div class="unit-body"><a class="icon icon-xl icon-circle icon-primary fa-plus" href="#" @click.prevent onclick="openModal(&quot;.add-genre-modal&quot;)"></a></div>
+                </div>
+              </div>
+              <div class="col-12">
+                <h3>All Genres</h3>
+                <div class="book-genres">
+                  <ul class="book-genres-list">
+                    <li class="book-genre" v-for="genre in genresAll"><a class="book-genre-link" :href="'#' + genre.name"># {{ genre.name }}</a><a class="book-genre-control book-genre-edit fa-edit" href="#" @click.prevent @click="editGenre(genre)" onclick="openModal(&quot;.edit-genre-modal&quot;)"></a><a class="book-genre-control book-genre-delete fa-trash-o" href="#" @click.prevent @click="deleteGenre(genre)"></a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <hr>
             <div class="row text-left row-30">
               <div class="col-12">
                 <div class="unit align-items-center">
@@ -169,7 +224,7 @@
                   <hr class="book-divider">
                   <div class="book-genres">
                     <ul class="book-genres-list">
-                      <li class="book-genre" v-for="genre in book.genres"><a class="book-genre-link" :href="'#' + genre"># {{genre}}</a></li>
+                      <li class="book-genre" v-for="genre in book.genres"><a class="book-genre-link" :href="'#' + genre.name"># {{genre.name}}</a></li>
                     </ul>
                   </div>
                 </div>

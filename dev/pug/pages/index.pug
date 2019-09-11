@@ -18,8 +18,9 @@ block page
                 input( type='checkbox' :id='`checkbox-${author.id}`' :value='`${author.firstName} ${author.lastName}`' v-model='newBook.authors' )
                 label( :for='`checkbox-${author.id}`' ) {{ `${author.firstName} ${author.lastName}` }}
             .form-wrap
-              label.form-label-outside( for='add-book-genres' ) Enter Book Genres using commas. Example: history, fantastic
-              input.form-input#add-book-genres( type='text' @focus='focus(newBook.genres, "#add-book-genres")' @input='validate(newBook.genres, "#add-book-genres")' @blur='blur(newBook.genres, "#add-book-genres")' v-model='newBook.genres' )
+              .checkbox-group( v-for='genre in genresAll' )
+                input( type='checkbox' :id='`checkbox-genre-${genre.id}`' :value='`${genre.name}`' v-model='newBook.genres' )
+                label( :for='`checkbox-genre-${genre.id}`' ) {{ `${genre.name}` }}
             .form-wrap
               .group
                 button.button.button-primary.button-ujarak( @click.prevent @click="addBook()" ) Add New Books
@@ -40,11 +41,12 @@ block page
                 input( type='checkbox' :id='`checkbox-edit-${author.id}`' :value='`${author.firstName} ${author.lastName}`' v-model='editBook.authors' )
                 label( :for='`checkbox-edit-${author.id}`' ) {{ `${author.firstName} ${author.lastName}` }}
             .form-wrap
-              label.form-label-outside( for='edit-book-genres' ) Enter Book Genres using commas. Example: history, fantastic
-              input.form-input#edit-book-genres( type='text' v-model='editBook.genres' )
+              .checkbox-group( v-for='genre in genresAll' )
+                input( type='checkbox' :id='`checkbox-genre-edit-${genre.id}`' :value='`${genre.name}`' v-model='editBook.genres' )
+                label( :for='`checkbox-genre-edit-${genre.id}`' ) {{ `${genre.name}` }}
             .form-wrap
               .group
-                button.button.button-primary.button-ujarak( @click="saveItem()") Save
+                button.button.button-primary.button-ujarak( @click="saveBook()") Save
                 button.button.button-default.button-ujarak( onclick='closeModal(".edit-modal")' ) Close
 
         // Modal Edit Author
@@ -77,10 +79,47 @@ block page
                 button.button.button-primary.button-ujarak( @click="addAuthor(newAuthor.firstName, newAuthor.lastName)") Save
                 button.button.button-default.button-ujarak( @click.prevent onclick='closeModal(".add-author-modal")' ) Close
 
+        // Modal Edit Genre
+        .modal-custom.edit-genre-modal
+          .modal-custom-inner
+            h3 Edit Genre
+            .form-wrap
+              label.form-label-outside( for='edit-genre-name' ) Edit Genre
+              input.form-input#edit-genre-name( type='text' v-model='copyGenre.name' )
+            .form-wrap
+              .group
+                button.button.button-primary.button-ujarak( @click="saveGenre()") Save
+                button.button.button-default.button-ujarak( onclick='closeModal(".edit-genre-modal")' ) Close
+
+        // Modal Add New Genre
+        .modal-custom.add-genre-modal
+          .modal-custom-inner
+            h3 Add New Genre
+            .form-wrap
+              label.form-label-outside( for='add-genre-name' ) Add new Author First Name
+              input.form-input#add-genre-name( @focus='focus(newGenre.name, "#add-genre-name")' @input='validate(newGenre.name, "#add-genre-name")' @blur='blur(newGenre.name, "#add-genre-name")' type='text' v-model='newGenre.name' )
+            .form-wrap
+              .group
+                button.button.button-primary.button-ujarak( @click="addGenre(newGenre.name)") Save
+                button.button.button-default.button-ujarak( @click.prevent onclick='closeModal(".add-genre-modal")' ) Close
+
         // Book List
         section.section.section-lg.bg-default.text-center
           .container
             h2 Book List
+            .row.row-30.text-left
+              .col-12
+                .unit.align-items-center
+                  .unit-left: h3.text-left Add New Genre
+                  .unit-body: a.icon.icon-xl.icon-circle.icon-primary.fa-plus(href='#' @click.prevent onclick='openModal(".add-genre-modal")')
+              .col-12
+                h3 All Genres
+                .book-genres
+                  ul.book-genres-list: li.book-genre( v-for='genre in genresAll' )
+                    a.book-genre-link(:href=  `'#' + genre.name`) # {{ genre.name }}
+                    a.book-genre-control.book-genre-edit.fa-edit( href='#' @click.prevent @click='editGenre(genre)' onclick='openModal(".edit-genre-modal")' )
+                    a.book-genre-control.book-genre-delete.fa-trash-o( href='#' @click.prevent @click='deleteGenre(genre)' )
+            hr
             .row.text-left.row-30
               .col-12
                 .unit.align-items-center
@@ -120,4 +159,4 @@ block page
                       span.book-author-first-name {{author.firstName}}
                       span.book-author-last-name {{author.lastName}}
                   hr.book-divider
-                  .book-genres: ul.book-genres-list: li.book-genre( v-for='genre in book.genres' ): a.book-genre-link(:href=  `'#' + genre`) # {{genre}}
+                  .book-genres: ul.book-genres-list: li.book-genre( v-for='genre in book.genres' ): a.book-genre-link(:href=  `'#' + genre.name`) # {{genre.name}}

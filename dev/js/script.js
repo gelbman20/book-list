@@ -5,14 +5,14 @@ const app = new Vue({
   data: {
     newBook: {
       authors: [],
-      validate: false
+      genres: []
     },
     editBook: {
       id: 0,
       name: '',
       description: '',
       authors: [],
-      genres: ''
+      genres: []
     },
     books: [
       {
@@ -26,7 +26,23 @@ const app = new Vue({
             lastName: 'Hellver'
           }
         ],
-        genres: ['history', 'example', 'test']
+        genres: [
+          {
+            id: 0,
+            name: 'history',
+            books: []
+          },
+          {
+            id: 1,
+            name: 'fantastic',
+            books: []
+          },
+          {
+            id: 2,
+            name: 'humor',
+            books: []
+          }
+        ]
       }
     ],
     authorsAll: [
@@ -43,18 +59,42 @@ const app = new Vue({
         books: []
       }
     ],
-
     newAuthor: {
       id: 0,
       firstName: '',
       lastName: '',
       books: []
     },
-
     copyAuthor: {
       id: 0,
       firstName: '',
       lastName: '',
+    },
+    genresAll: [
+      {
+        id: 0,
+        name: 'history',
+        books: [0]
+      },
+      {
+        id: 1,
+        name: 'fantastic',
+        books: [0]
+      },
+      {
+        id: 2,
+        name: 'humor',
+        books: [0]
+      }
+    ],
+    newGenre : {
+      id: 0,
+      name: '',
+      books: []
+    },
+    copyGenre: {
+      id: 0,
+      name: ''
     }
   },
   methods: {
@@ -115,6 +155,53 @@ const app = new Vue({
       })
     },
 
+    addGenre(name) {
+      // Validate inputs
+      if ( !this.newGenre.name ) {
+        this.validate(this.newGenre.name, "#add-genre-name");
+        return false;
+      }
+
+      const genre = {
+        name
+      };
+
+      if ( this.genresAll.length === 0 ) {
+        genre.id = 0;
+      } else {
+        genre.id = this.genresAll[ this.genresAll.length - 1 ].id + 1;
+      }
+
+      this.genresAll.push( genre );
+
+      this.newGenre.name = '';
+    },
+
+    deleteGenre(genre) {
+      this.genresAll.splice(this.genresAll.indexOf(genre), 1);
+    },
+
+    editGenre(genre) {
+      this.copyGenre.id = genre.id;
+      this.copyGenre.name = genre.name;
+    },
+
+    saveGenre(genre) {
+      this.genresAll.forEach( item => {
+        if ( item.id === this.copyGenre.id ) {
+          item.name = this.copyGenre.name;
+        }
+      });
+
+      this.books.forEach( item => {
+        for ( let i = 0; i < item.genres.length; i++ ) {
+          if ( item.genres[i].id === this.copyGenre.id ) {
+            item.genres[i].name = this.copyGenre.name;
+          }
+        }
+      })
+    },
+
     addBook() {
       // Validate Inputs
       if ( !this.newBook.name || !this.newBook.description || !this.newBook.genres ) {
@@ -128,7 +215,7 @@ const app = new Vue({
       name = this.newBook.name,
       description = this.newBook.description,
       authors = createAuthors(this.newBook.authors, this.authorsAll),
-      genres = createGenres(this.newBook.genres);
+      genres = createGenres(this.newBook.genres, this.genresAll);
 
 
       if ( this.books.length === 0 ) {
@@ -150,13 +237,21 @@ const app = new Vue({
         }
       });
 
+      this.genresAll.forEach(genre => {
+        for ( let i = 0; i < book.genres.length; i++ ) {
+          if ( book.genres[i].id === genre.id) {
+            genre.books.push(book.id);
+          }
+        }
+      });
+
       this.books.push(book);
 
       // Clear Fills
       this.newBook.name = '';
       this.newBook.description = '';
       this.newBook.authors = [];
-      this.newBook.genres = '';
+      this.newBook.genres = [];
     },
 
     deleteBook: function (item) {
@@ -168,16 +263,16 @@ const app = new Vue({
       this.editBook.name = name;
       this.editBook.description = description;
       this.editBook.authors = authors.map(author => `${author.firstName} ${author.lastName}`);
-      this.editBook.genres = genres.join(', ');
+      this.editBook.genres = genres.map(genre => `${genre.name}`);
     },
 
-    saveItem() {
+    saveBook() {
      this.books.forEach(item => {
        if (item.id === this.editBook.id) {
          item.name = this.editBook.name;
          item.description = this.editBook.description;
          item.authors = createAuthors(this.editBook.authors, this.authorsAll);
-         item.genres = createGenres(this.editBook.genres);
+         item.genres = createGenres(this.editBook.genres, this.genresAll);
        }
      })
     },
@@ -226,8 +321,24 @@ function createAuthors(arr, allAuthors) {
   return authorArrResult;
 }
 
-function createGenres(string) {
-  return string.split(', ').filter( item => item !== '' );
+function createGenres(arr, allGenres) {
+  let genresArr = [];
+  let genresArrResult = [];
+  genresArr = arr.map(item => {
+    return {
+      name : item
+    };
+  });
+
+  genresArrResult = allGenres.filter(item => {
+    for( let i = 0; i < genresArr.length; i++ ) {
+      if ( item.name === genresArr[i].name ) {
+        return item;
+      }
+    }
+  });
+
+  return genresArrResult;
 }
 
 function openModal(element) {

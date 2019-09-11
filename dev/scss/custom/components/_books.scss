@@ -126,16 +126,19 @@
   }
 }
 
+.book-genre-control,
 .book-author-control {
   display: inline-block;
   margin-left: 8px;
   vertical-align: middle;
 }
 
+.book-genre-delete,
 .book-author-delete {
   @include link($danger-color, $black)
 }
 
+.book-genre-edit,
 .book-author-edit {
   @include link($success-color, $black)
 }
