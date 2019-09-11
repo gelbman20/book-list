@@ -15,49 +15,10 @@ const app = new Vue({
       genres: []
     },
     books: [
-      {
-        id: 0,
-        name: 'New World',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium at deserunt doloribus dolorum, ea eligendi.',
-        authors: [
-          {
-            id: 0,
-            firstName: 'Andrew',
-            lastName: 'Hellver'
-          }
-        ],
-        genres: [
-          {
-            id: 0,
-            name: 'history',
-            books: []
-          },
-          {
-            id: 1,
-            name: 'fantastic',
-            books: []
-          },
-          {
-            id: 2,
-            name: 'humor',
-            books: []
-          }
-        ]
-      }
+
     ],
     authorsAll: [
-      {
-        id: 0,
-        firstName: 'Andrew',
-        lastName: 'Hellver',
-        books: [0]
-      },
-      {
-        id: 1,
-        firstName: 'Marina',
-        lastName: 'Molina',
-        books: []
-      }
+
     ],
     newAuthor: {
       id: 0,
@@ -71,21 +32,7 @@ const app = new Vue({
       lastName: '',
     },
     genresAll: [
-      {
-        id: 0,
-        name: 'history',
-        books: [0]
-      },
-      {
-        id: 1,
-        name: 'fantastic',
-        books: [0]
-      },
-      {
-        id: 2,
-        name: 'humor',
-        books: [0]
-      }
+
     ],
     newGenre : {
       id: 0,
