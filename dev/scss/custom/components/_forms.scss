@@ -58,6 +58,14 @@ input:-webkit-autofill ~ .form-validation {
   -webkit-appearance: none;
   transition: .3s ease-in-out;
 
+  &.has-focus {
+    border-color: $form-feedback-focus-color;
+  }
+
+  &.has-error {
+    border-color: $form-feedback-invalid-color;
+  }
+
   @if ($form-input-border) {
     border: $form-input-border;
   }

@@ -12,20 +12,20 @@ block page
         .modal-custom.add-modal
           h3 Add New Book
           .form-wrap
-            label.form-label-outside( for='book-name' ) Enter Book Name
-            input.form-input#book-name( type='text' v-model='newBook.name' )
+            label.form-label-outside( for='add-book-name' ) Enter Book Name
+            input.form-input#add-book-name( type='text' @focus='focus(newBook.name, "#add-book-name")' @input='validate(newBook.name, "#add-book-name")' @blur='blur(newBook.name, "#add-book-name")' v-model='newBook.name' )
           .form-wrap
-            label.form-label-outside( for='book-description' ) Enter Book Description
-            input.form-input#book-description( type='text' v-model='newBook.description' )
+            label.form-label-outside( for='add-book-description' ) Enter Book Description
+            input.form-input#add-book-description( type='text' @focus='focus(newBook.description, "#add-book-description")' @input='validate(newBook.description, "#add-book-description")' @blur='blur(newBook.description, "#add-book-description")' v-model='newBook.description' )
           .form-wrap( v-for='author in authorsAll' )
             input( type='checkbox' :id='`checkbox-${author.id}`' :value='`${author.firstName} ${author.lastName}`' v-model='newBook.authors' )
             label( :for='`checkbox-${author.id}`' ) {{ `${author.firstName} ${author.lastName}` }}
           .form-wrap
-            label.form-label-outside( for='book-genres' ) Enter Book Genres using commas. Example: history, fantastic
-            input.form-input#book-genres( type='text' v-model='newBook.genres' )
+            label.form-label-outside( for='add-book-genres' ) Enter Book Genres using commas. Example: history, fantastic
+            input.form-input#add-book-genres( type='text' @focus='focus(newBook.genres, "#add-book-genres")' @input='validate(newBook.genres, "#add-book-genres")' @blur='blur(newBook.genres, "#add-book-genres")' v-model='newBook.genres' )
           .form-wrap
             .group
-              button.button.button-primary.button-ujarak( @click.prevent @click="addItem()" ) Add New Books
+              button.button.button-primary.button-ujarak( @click.prevent @click="addBook()" ) Add New Books
               button.button.button-default.button-ujarak( @click.prevent onclick='closeModal(".add-modal")' ) Close
 
         // Modal Edit Book
@@ -38,15 +38,15 @@ block page
             label.form-label-outside( for='edit-book-description' ) Enter Book Description
             input.form-input#edit-book-description( type='text' v-model='editBook.description')
           .form-wrap( v-for='author in authorsAll' )
-            input( type='checkbox' :id='`checkbox-${author.id}`' :value='`${author.firstName} ${author.lastName}`' v-model='editBook.authors' )
-            label( :for='`checkbox-${author.id}`' ) {{ `${author.firstName} ${author.lastName}` }}
+            input( type='checkbox' :id='`checkbox-edit-${author.id}`' :value='`${author.firstName} ${author.lastName}`' v-model='editBook.authors' )
+            label( :for='`checkbox-edit-${author.id}`' ) {{ `${author.firstName} ${author.lastName}` }}
           .form-wrap
             label.form-label-outside( for='edit-book-genres' ) Enter Book Genres using commas. Example: history, fantastic
             input.form-input#edit-book-genres( type='text' v-model='editBook.genres' )
           .form-wrap
             .group
               button.button.button-primary.button-ujarak( @click="saveItem()") Save
-              button.button.button-default.button-ujarak( @click="saveItem()" onclick='closeModal(".edit-modal")' ) Save and Close
+              button.button.button-default.button-ujarak( onclick='closeModal(".edit-modal")' ) Close
 
         // Modal Edit Author
         .modal-custom.edit-author-modal
@@ -67,10 +67,10 @@ block page
           h3 Add New Author
           .form-wrap
             label.form-label-outside( for='add-author-name' ) Add new Author First Name
-            input.form-input#add-author-name( type='text' v-model='newAuthor.firstName' )
+            input.form-input#add-author-name( @focus='focus(newAuthor.firstName, "#add-author-name")' @input='validate(newAuthor.firstName, "#add-author-name")' @blur='blur(newAuthor.firstName, "#add-author-name")' type='text' v-model='newAuthor.firstName' )
           .form-wrap
             label.form-label-outside( for='add-author-last-name' ) Add new Author Last Name
-            input.form-input#add-author-last-name( type='text' v-model='newAuthor.lastName' )
+            input.form-input#add-author-last-name( @focus='focus(newAuthor.lastName, "#add-author-last-name")' @input='validate(newAuthor.lastName, "#add-author-last-name")' @blur='blur(newAuthor.lastName, "#add-author-last-name")'  type='text' v-model='newAuthor.lastName' )
           .form-wrap
             .group
               button.button.button-primary.button-ujarak( @click="addAuthor(newAuthor.firstName, newAuthor.lastName)") Save
@@ -94,7 +94,7 @@ block page
         hr
 
         .unit.align-items-center
-          .unit-left: h3.text-left Add New Item
+          .unit-left: h3.text-left Add New Book
           .unit-body: a.icon.icon-xl.icon-circle.icon-primary.fa-plus(href='#' @click.prevent onclick='openModal(".add-modal")')
         .row.row-30
           .col-md-6.col-lg-4( v-for='book in books' )
@@ -102,10 +102,10 @@ block page
               .book-control
                 ul.book-control-list
                   li.book-control-item
-                    a.book-control-link( href='#' @click.prevent @click='editItem(book)' )
+                    a.book-control-link( href='#' @click.prevent @click='editTheBook(book)' onclick='openModal(".edit-modal")' )
                       span.icon.fa-edit
                   li.book-control-item
-                    a.book-control-link.book-control-link-danger( href='#' @click.prevent @click="deleteItem(book)" )
+                    a.book-control-link.book-control-link-danger( href='#' @click.prevent @click="deleteBook(book)" )
                       span.icon.fa-trash
               .book-name: h4 {{book.name}}
               .book-description: p(contenteditable='true') {{book.description}}
