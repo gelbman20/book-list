@@ -14,12 +14,8 @@ const app = new Vue({
       authors: [],
       genres: []
     },
-    books: [
-
-    ],
-    authorsAll: [
-
-    ],
+    books: [],
+    authorsAll: [],
     newAuthor: {
       id: 0,
       firstName: '',
@@ -31,10 +27,8 @@ const app = new Vue({
       firstName: '',
       lastName: '',
     },
-    genresAll: [
-
-    ],
-    newGenre : {
+    genresAll: [],
+    newGenre: {
       id: 0,
       name: '',
       books: []
@@ -45,9 +39,9 @@ const app = new Vue({
     }
   },
   methods: {
-    addAuthor( firstName, lastName ) {
+    addAuthor(firstName, lastName) {
       // Validate inputs
-      if ( !this.newAuthor.firstName || !this.newAuthor.lastName) {
+      if (!this.newAuthor.firstName || !this.newAuthor.lastName) {
         this.validate(this.newAuthor.firstName, "#add-author-name");
         this.validate(this.newAuthor.lastName, "#add-author-last-name");
         return false;
@@ -56,17 +50,17 @@ const app = new Vue({
       const author = {
         firstName,
         lastName,
-        books : []
+        books: []
       };
 
-      if ( this.authorsAll.length === 0 ) {
+      if (this.authorsAll.length === 0) {
         author.id = 0;
       } else {
-        author.id = this.authorsAll[ this.authorsAll.length - 1 ].id + 1;
+        author.id = this.authorsAll[this.authorsAll.length - 1].id + 1;
       }
 
       // Add author to all author list
-      this.authorsAll.push( author );
+      this.authorsAll.push(author);
 
       // Clear Inputs
       this.newAuthor.firstName = '';
@@ -84,16 +78,16 @@ const app = new Vue({
     },
 
     saveAuthor(author) {
-      this.authorsAll.forEach( item => {
-        if ( item.id === this.copyAuthor.id ) {
+      this.authorsAll.forEach(item => {
+        if (item.id === this.copyAuthor.id) {
           item.firstName = this.copyAuthor.firstName;
           item.lastName = this.copyAuthor.lastName;
         }
       });
 
-      this.books.forEach( item => {
-        for ( let i = 0; i < item.authors.length; i++ ) {
-          if ( item.authors[i].id === this.copyAuthor.id ) {
+      this.books.forEach(item => {
+        for (let i = 0; i < item.authors.length; i++) {
+          if (item.authors[i].id === this.copyAuthor.id) {
             item.authors[i].firstName = this.copyAuthor.firstName;
             item.authors[i].lastName = this.copyAuthor.lastName;
           }
@@ -103,7 +97,7 @@ const app = new Vue({
 
     addGenre(name) {
       // Validate inputs
-      if ( !this.newGenre.name ) {
+      if (!this.newGenre.name) {
         this.validate(this.newGenre.name, "#add-genre-name");
         return false;
       }
@@ -113,13 +107,13 @@ const app = new Vue({
         books: []
       };
 
-      if ( this.genresAll.length === 0 ) {
+      if (this.genresAll.length === 0) {
         genre.id = 0;
       } else {
-        genre.id = this.genresAll[ this.genresAll.length - 1 ].id + 1;
+        genre.id = this.genresAll[this.genresAll.length - 1].id + 1;
       }
 
-      this.genresAll.push( genre );
+      this.genresAll.push(genre);
 
       this.newGenre.name = '';
     },
@@ -134,15 +128,15 @@ const app = new Vue({
     },
 
     saveGenre(genre) {
-      this.genresAll.forEach( item => {
-        if ( item.id === this.copyGenre.id ) {
+      this.genresAll.forEach(item => {
+        if (item.id === this.copyGenre.id) {
           item.name = this.copyGenre.name;
         }
       });
 
-      this.books.forEach( item => {
-        for ( let i = 0; i < item.genres.length; i++ ) {
-          if ( item.genres[i].id === this.copyGenre.id ) {
+      this.books.forEach(item => {
+        for (let i = 0; i < item.genres.length; i++) {
+          if (item.genres[i].id === this.copyGenre.id) {
             item.genres[i].name = this.copyGenre.name;
           }
         }
@@ -151,7 +145,7 @@ const app = new Vue({
 
     addBook() {
       // Validate Inputs
-      if ( !this.newBook.name || !this.newBook.description || !this.newBook.genres ) {
+      if (!this.newBook.name || !this.newBook.description || !this.newBook.genres) {
         this.validate(this.newBook.name, "#add-book-name");
         this.validate(this.newBook.description, "#add-book-description");
         this.validate(this.newBook.genres, "#add-book-genres");
@@ -159,16 +153,15 @@ const app = new Vue({
       }
 
       const book = {},
-      name = this.newBook.name,
-      description = this.newBook.description,
-      authors = createAuthors(this.newBook.authors, this.authorsAll),
-      genres = createGenres(this.newBook.genres, this.genresAll);
+        name = this.newBook.name,
+        description = this.newBook.description,
+        authors = createAuthors(this.newBook.authors, this.authorsAll),
+        genres = createGenres(this.newBook.genres, this.genresAll);
 
-
-      if ( this.books.length === 0 ) {
+      if (this.books.length === 0) {
         book.id = 0;
       } else {
-        book.id = this.books[ this.books.length - 1 ].id + 1;
+        book.id = this.books[this.books.length - 1].id + 1;
       }
 
       book.name = name;
@@ -176,17 +169,19 @@ const app = new Vue({
       book.authors = authors;
       book.genres = genres;
 
+      console.log( book.authors  );
+
       this.authorsAll.forEach(author => {
-        for ( let i = 0; i < book.authors.length; i++ ) {
-          if ( book.authors[i].id === author.id) {
+        for (let i = 0; i < book.authors.length; i++) {
+          if ( book.authors[i].id === author.id ) {
             author.books.push(book.id);
           }
         }
       });
 
       this.genresAll.forEach(genre => {
-        for ( let i = 0; i < book.genres.length; i++ ) {
-          if ( book.genres[i].id === genre.id) {
+        for (let i = 0; i < book.genres.length; i++) {
+          if (book.genres[i].id === genre.id) {
             genre.books.push(book.id);
           }
         }
@@ -201,8 +196,15 @@ const app = new Vue({
       this.newBook.genres = [];
     },
 
-    deleteBook: function (item) {
-      this.books.splice(this.books.indexOf(item), 1)
+    deleteBook: function ( item ) {
+      this.books.splice(this.books.indexOf(item), 1);
+
+      // Start Bind Book to author
+      this.authorsAll.forEach(author => {
+        author.books = author.books.filter(element => {
+          return element !== item.id;
+        })
+      });
     },
 
     editTheBook: function ( { id, name, description, authors, genres } = item ) {
@@ -214,18 +216,38 @@ const app = new Vue({
     },
 
     saveBook() {
-     this.books.forEach(item => {
-       if (item.id === this.editBook.id) {
-         item.name = this.editBook.name;
-         item.description = this.editBook.description;
-         item.authors = createAuthors(this.editBook.authors, this.authorsAll);
-         item.genres = createGenres(this.editBook.genres, this.genresAll);
-       }
-     })
+      this.books.forEach(item => {
+        if ( item.id === this.editBook.id ) {
+          item.name = this.editBook.name;
+          item.description = this.editBook.description;
+          item.authors = createAuthors(this.editBook.authors, this.authorsAll, item.id);
+          item.genres = createGenres(this.editBook.genres, this.genresAll);
+
+          // Start Bind Book to author
+          this.authorsAll.forEach(author => {
+            author.books = author.books.filter(element => {
+              return element !== item.id;
+            })
+          });
+
+          let authorIdArr = item.authors.map(author => {
+            return author.id;
+          });
+
+          authorIdArr.forEach(id => {
+            for ( let i = 0; i < this.authorsAll.length; i++ ) {
+              if ( id === this.authorsAll[i].id ) {
+                this.authorsAll[i].books.push( item.id )
+              }
+            }
+          });
+          // End Bind Book to author
+        }
+      });
     },
 
     validate(input, node) {
-      if ( input === undefined || input === '' ) {
+      if (input === undefined || input === '') {
         document.querySelector(node).classList.add('has-error');
       } else {
         document.querySelector(node).classList.remove('has-error');
@@ -233,7 +255,7 @@ const app = new Vue({
     },
 
     blur(input, node) {
-      if ( input === undefined || input === '' ) {
+      if (input === undefined || input === '') {
         document.querySelector(node).classList.add('has-error');
       } else {
         document.querySelector(node).classList.remove('has-error');
@@ -246,7 +268,6 @@ const app = new Vue({
     },
   },
   mounted() {
-    console.log('App Mounted');
     if (localStorage.getItem('authorsAll')) this.authorsAll = JSON.parse(localStorage.getItem('authorsAll'));
     if (localStorage.getItem('genresAll')) this.genresAll = JSON.parse(localStorage.getItem('genresAll'));
     if (localStorage.getItem('books')) this.books = JSON.parse(localStorage.getItem('books'));
@@ -273,19 +294,20 @@ const app = new Vue({
   }
 });
 
-function createAuthors(arr, allAuthors) {
-  let authorsArr = [];
-  let authorArrResult = [];
-  authorsArr = arr.map(item => {
+function createAuthors(bookAuthors, allAuthors) {
+  let authorsArr = [],
+    authorArrResult;
+
+  authorsArr = bookAuthors.map(item => {
     return {
-      firstName : item.split(' ')[0],
-      lastName : item.split(' ')[1]
+      firstName: item.split(' ')[0],
+      lastName: item.split(' ')[1]
     };
   });
 
   authorArrResult = allAuthors.filter(item => {
-    for( let i = 0; i < authorsArr.length; i++ ) {
-      if ( item.firstName === authorsArr[i].firstName && item.lastName === authorsArr[i].lastName ) {
+    for (let i = 0; i < authorsArr.length; i++) {
+      if (item.firstName === authorsArr[i].firstName && item.lastName === authorsArr[i].lastName) {
         return item;
       }
     }
@@ -294,18 +316,19 @@ function createAuthors(arr, allAuthors) {
   return authorArrResult;
 }
 
-function createGenres(arr, allGenres) {
-  let genresArr = [];
-  let genresArrResult = [];
-  genresArr = arr.map(item => {
+function createGenres(bookGenres, allGenres) {
+  let genresArr = [],
+    genresArrResult;
+
+  genresArr = bookGenres.map(item => {
     return {
-      name : item
+      name: item
     };
   });
 
   genresArrResult = allGenres.filter(item => {
-    for( let i = 0; i < genresArr.length; i++ ) {
-      if ( item.name === genresArr[i].name ) {
+    for (let i = 0; i < genresArr.length; i++) {
+      if (item.name === genresArr[i].name) {
         return item;
       }
     }

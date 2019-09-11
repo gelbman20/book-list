@@ -160,6 +160,22 @@
         <section class="section section-lg bg-default text-center">
           <div class="container">
             <h2>Book List</h2>
+            <div class="row text-left">
+              <div class="col-12">
+                <h4>Authors and their books</h4>
+                <div class="divider"></div>
+                <ul class="list list-lg">
+                  <li v-for="author in authorsAll">
+                    <h5>Author: {{ `${author.firstName} ${author.lastName}` }}</h5>
+                    <ol class="book-name-list">
+                      <li>Books names:</li>
+                      <li v-for="book in books"><span class="book-name-small" v-for="(authorBook, index) in author.books" v-if="author.books[index] === book.id">{{ book.name }}</span></li>
+                    </ol>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <hr>
             <div class="row row-50 text-left">
               <div class="col-lg-6">
                 <div class="unit align-items-center">
@@ -223,6 +239,21 @@
                     </ul>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div class="row text-left">
+              <div class="col-12">
+                <h4>Authors and their books</h4>
+                <div class="divider"></div>
+                <ul class="list list-lg">
+                  <li v-for="author in authorsAll">
+                    <h5>Author: {{ `${author.firstName} ${author.lastName}` }}</h5>
+                    <ol class="book-name-list">
+                      <li>Books names:</li>
+                      <li v-for="book in books"><span class="book-name-small" v-for="(authorBook, index) in author.books" v-if="author.books[index] === book.id">{{ book.name }}</span></li>
+                    </ol>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>

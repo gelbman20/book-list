@@ -143,6 +143,49 @@
   @include link($success-color, $black)
 }
 
+.book-name-list {
+  font-size: 17px;
+  letter-spacing: .02em;
+
+  > li {
+    position: relative;
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 7px;
+
+    &:first-child {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    &:empty { display: none; }
+  }
+
+  > li {
+    &:first-child,
+    &:last-child {
+      &:after {
+        display: none;
+      }
+    }
+
+    &:after {
+      content: '|';
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+    }
+  }
+}
+
+.book-name-small {
+  display: inline-block;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
 .book-author-first-name,
 .book-author-last-name {
   display: inline-block;
@@ -185,6 +228,7 @@ h2 + * { margin-top: 30px; }
 * + .book-description { margin-top: 20px; }
 * + .book-authors { margin-top: 20px; }
 * + .book-genres { margin-top: 15px; }
+* + .book-name-list { margin-top: 5px; }
 
 @include media-breakpoint-up(lg) {
   h2 + * { margin-top: 50px; }

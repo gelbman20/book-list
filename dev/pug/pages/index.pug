@@ -111,6 +111,20 @@ block page
         section.section.section-lg.bg-default.text-center
           .container
             h2 Book List
+            .row.text-left
+              .col-12
+                h4 Authors and their books
+                .divider
+                ul.list.list-lg
+                  li( v-for='author in authorsAll')
+                   h5 Author: {{ `${author.firstName} ${author.lastName}` }}
+                   ol.book-name-list
+                     li Books names:
+                     li( v-for='book in books' )
+                        span.book-name-small( v-for='(authorBook, index) in author.books' v-if='author.books[index] === book.id' ) {{ book.name }}
+
+            hr
+
             .row.row-50.text-left
               .col-lg-6
                 .unit.align-items-center
@@ -159,3 +173,17 @@ block page
                       span.book-author-last-name {{author.lastName}}
                   hr.book-divider
                   .book-genres: ul.book-genres-list: li.book-genre( v-for='genre in book.genres' ): a.book-genre-link(:href=  `'#' + genre.name`) # {{genre.name}}
+
+
+            .row.text-left
+              .col-12
+                h4 Authors and their books
+                .divider
+                ul.list.list-lg
+                  li( v-for='author in authorsAll')
+                    h5 Author: {{ `${author.firstName} ${author.lastName}` }}
+                    ol.book-name-list
+                      li Books names:
+                      li( v-for='book in books' )
+                        span.book-name-small( v-for='(authorBook, index) in author.books' v-if='author.books[index] === book.id' ) {{ book.name }}
+
