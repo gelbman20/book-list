@@ -100,7 +100,7 @@ block page
           .modal-custom-inner
             h3 Add New Genre
             .form-wrap
-              label.form-label-outside( for='add-genre-name' ) Add new Author First Name
+              label.form-label-outside( for='add-genre-name' ) Add new Genre
               input.form-input#add-genre-name( @focus='focus(newGenre.name, "#add-genre-name")' @input='validate(newGenre.name, "#add-genre-name")' @blur='blur(newGenre.name, "#add-genre-name")' type='text' v-model='newGenre.name' )
             .form-wrap
               .group
@@ -114,16 +114,6 @@ block page
             .row.row-50.text-left
               .col-lg-6
                 .unit.align-items-center
-                  .unit-left: h3.text-left All Genres
-                  .unit-body: a.icon.icon-xl.icon-circle.icon-primary.fa-plus(href='#' @click.prevent onclick='openModal(".add-genre-modal")')
-                .book-genres
-                  ul.book-genres-list: li.book-genre( v-for='genre in genresAll' )
-                    a.book-genre-link(:href=  `'#' + genre.name`) # {{ genre.name }}
-                    a.book-genre-control.book-genre-edit.fa-edit( href='#' @click.prevent @click='editGenre(genre)' onclick='openModal(".edit-genre-modal")' )
-                    a.book-genre-control.book-genre-delete.fa-trash-o( href='#' @click.prevent @click='deleteGenre(genre)' )
-
-              .col-lg-6
-                .unit.align-items-center
                   .unit-left: h3.text-left All Authors
                   .unit-body: a.icon.icon-xl.icon-circle.icon-primary.fa-plus(href='#' @click.prevent onclick='openModal(".add-author-modal")')
                 .book-authors
@@ -133,6 +123,16 @@ block page
                       span.book-author-last-name {{ author.lastName }}
                       a.book-author-control.book-author-edit.fa-edit( href='#' @click.prevent @click='editAuthor(author)' onclick='openModal(".edit-author-modal")' )
                       a.book-author-control.book-author-delete.fa-trash-o( href='#' @click.prevent @click='deleteAuthor(author)' )
+
+              .col-lg-6
+                .unit.align-items-center
+                  .unit-left: h3.text-left All Genres
+                  .unit-body: a.icon.icon-xl.icon-circle.icon-primary.fa-plus(href='#' @click.prevent onclick='openModal(".add-genre-modal")')
+                .book-genres
+                  ul.book-genres-list: li.book-genre( v-for='genre in genresAll' )
+                    a.book-genre-link(:href=  `'#' + genre.name`) # {{ genre.name }}
+                    a.book-genre-control.book-genre-edit.fa-edit( href='#' @click.prevent @click='editGenre(genre)' onclick='openModal(".edit-genre-modal")' )
+                    a.book-genre-control.book-genre-delete.fa-trash-o( href='#' @click.prevent @click='deleteGenre(genre)' )
 
             hr
 

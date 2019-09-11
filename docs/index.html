@@ -145,7 +145,7 @@
           <div class="modal-custom-inner">
             <h3>Add New Genre</h3>
             <div class="form-wrap">
-              <label class="form-label-outside" for="add-genre-name">Add new Author First Name</label>
+              <label class="form-label-outside" for="add-genre-name">Add new Genre</label>
               <input class="form-input" id="add-genre-name" @focus="focus(newGenre.name, &quot;#add-genre-name&quot;)" @input="validate(newGenre.name, &quot;#add-genre-name&quot;)" @blur="blur(newGenre.name, &quot;#add-genre-name&quot;)" type="text" v-model="newGenre.name">
             </div>
             <div class="form-wrap">
@@ -164,19 +164,6 @@
               <div class="col-lg-6">
                 <div class="unit align-items-center">
                   <div class="unit-left">
-                    <h3 class="text-left">All Genres</h3>
-                  </div>
-                  <div class="unit-body"><a class="icon icon-xl icon-circle icon-primary fa-plus" href="#" @click.prevent onclick="openModal(&quot;.add-genre-modal&quot;)"></a></div>
-                </div>
-                <div class="book-genres">
-                  <ul class="book-genres-list">
-                    <li class="book-genre" v-for="genre in genresAll"><a class="book-genre-link" :href="'#' + genre.name"># {{ genre.name }}</a><a class="book-genre-control book-genre-edit fa-edit" href="#" @click.prevent @click="editGenre(genre)" onclick="openModal(&quot;.edit-genre-modal&quot;)"></a><a class="book-genre-control book-genre-delete fa-trash-o" href="#" @click.prevent @click="deleteGenre(genre)"></a></li>
-                  </ul>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="unit align-items-center">
-                  <div class="unit-left">
                     <h3 class="text-left">All Authors</h3>
                   </div>
                   <div class="unit-body"><a class="icon icon-xl icon-circle icon-primary fa-plus" href="#" @click.prevent onclick="openModal(&quot;.add-author-modal&quot;)"></a></div>
@@ -184,6 +171,19 @@
                 <div class="book-authors">
                   <ul class="book-author-list-inline">
                     <li v-for=" author in authorsAll "><span class="book-author-first-name">{{ author.firstName }}</span><span class="book-author-last-name">{{ author.lastName }}</span><a class="book-author-control book-author-edit fa-edit" href="#" @click.prevent @click="editAuthor(author)" onclick="openModal(&quot;.edit-author-modal&quot;)"></a><a class="book-author-control book-author-delete fa-trash-o" href="#" @click.prevent @click="deleteAuthor(author)"></a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="unit align-items-center">
+                  <div class="unit-left">
+                    <h3 class="text-left">All Genres</h3>
+                  </div>
+                  <div class="unit-body"><a class="icon icon-xl icon-circle icon-primary fa-plus" href="#" @click.prevent onclick="openModal(&quot;.add-genre-modal&quot;)"></a></div>
+                </div>
+                <div class="book-genres">
+                  <ul class="book-genres-list">
+                    <li class="book-genre" v-for="genre in genresAll"><a class="book-genre-link" :href="'#' + genre.name"># {{ genre.name }}</a><a class="book-genre-control book-genre-edit fa-edit" href="#" @click.prevent @click="editGenre(genre)" onclick="openModal(&quot;.edit-genre-modal&quot;)"></a><a class="book-genre-control book-genre-delete fa-trash-o" href="#" @click.prevent @click="deleteGenre(genre)"></a></li>
                   </ul>
                 </div>
               </div>
