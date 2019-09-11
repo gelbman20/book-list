@@ -98,7 +98,6 @@ const app = new Vue({
     }
   },
   methods: {
-
     addAuthor( firstName, lastName ) {
       // Validate inputs
       if ( !this.newAuthor.firstName || !this.newAuthor.lastName) {
@@ -163,7 +162,8 @@ const app = new Vue({
       }
 
       const genre = {
-        name
+        name,
+        books: []
       };
 
       if ( this.genresAll.length === 0 ) {
@@ -296,6 +296,32 @@ const app = new Vue({
 
     focus(input, node) {
       document.querySelector(node).classList.add('has-focus');
+    },
+  },
+  mounted() {
+    console.log('App Mounted');
+    if (localStorage.getItem('authorsAll')) this.authorsAll = JSON.parse(localStorage.getItem('authorsAll'));
+    if (localStorage.getItem('genresAll')) this.genresAll = JSON.parse(localStorage.getItem('genresAll'));
+    if (localStorage.getItem('books')) this.books = JSON.parse(localStorage.getItem('books'));
+  },
+  watch: {
+    authorsAll: {
+      handler() {
+        localStorage.setItem('authorsAll', JSON.stringify(this.authorsAll))
+      },
+      deep: true
+    },
+    genresAll: {
+      handler() {
+        localStorage.setItem('genresAll', JSON.stringify(this.genresAll))
+      },
+      deep: true
+    },
+    books: {
+      handler() {
+        localStorage.setItem('books', JSON.stringify(this.books))
+      },
+      deep: true
     },
   }
 });
