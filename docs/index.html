@@ -29,13 +29,15 @@
               <input class="form-input" id="add-book-description" type="text" @focus="focus(newBook.description, &quot;#add-book-description&quot;)" @input="validate(newBook.description, &quot;#add-book-description&quot;)" @blur="blur(newBook.description, &quot;#add-book-description&quot;)" v-model="newBook.description">
             </div>
             <div class="form-wrap">
-              <div class="checkbox-group" v-for="author in authorsAll">
+              <label class="form-label-outside" for="checkbox-group">Check Author or Authors</label>
+              <div class="checkbox-group" id="checkbox-group" v-for="author in authorsAll">
                 <input type="checkbox" :id="`checkbox-${author.id}`" :value="`${author.firstName} ${author.lastName}`" v-model="newBook.authors">
                 <label :for="`checkbox-${author.id}`">{{ `${author.firstName} ${author.lastName}` }}</label>
               </div>
             </div>
             <div class="form-wrap">
-              <div class="checkbox-group" v-for="genre in genresAll">
+              <label class="form-label-outside" for="checkbox-group-1">Check Genre or Genres</label>
+              <div class="checkbox-group" id="checkbox-group-1" v-for="genre in genresAll">
                 <input type="checkbox" :id="`checkbox-genre-${genre.id}`" :value="`${genre.name}`" v-model="newBook.genres">
                 <label :for="`checkbox-genre-${genre.id}`">{{ `${genre.name}` }}</label>
               </div>
@@ -61,13 +63,15 @@
               <input class="form-input" id="edit-book-description" type="text" v-model="editBook.description">
             </div>
             <div class="form-wrap">
-              <div class="checkbox-group" v-for="author in authorsAll">
+              <label class="form-label-outside" for="checkbox-group-2">Check Author or Authors</label>
+              <div class="checkbox-group" id="checkbox-group-2" v-for="author in authorsAll">
                 <input type="checkbox" :id="`checkbox-edit-${author.id}`" :value="`${author.firstName} ${author.lastName}`" v-model="editBook.authors">
                 <label :for="`checkbox-edit-${author.id}`">{{ `${author.firstName} ${author.lastName}` }}</label>
               </div>
             </div>
             <div class="form-wrap">
-              <div class="checkbox-group" v-for="genre in genresAll">
+              <label class="form-label-outside" for="checkbox-group-3">Check Author or Authors</label>
+              <div class="checkbox-group" id="checkbox-group-3" v-for="genre in genresAll">
                 <input type="checkbox" :id="`checkbox-genre-edit-${genre.id}`" :value="`${genre.name}`" v-model="editBook.genres">
                 <label :for="`checkbox-genre-edit-${genre.id}`">{{ `${genre.name}` }}</label>
               </div>
@@ -156,36 +160,27 @@
         <section class="section section-lg bg-default text-center">
           <div class="container">
             <h2>Book List</h2>
-            <div class="row row-30 text-left">
-              <div class="col-12">
+            <div class="row row-50 text-left">
+              <div class="col-lg-6">
                 <div class="unit align-items-center">
                   <div class="unit-left">
-                    <h3 class="text-left">Add New Genre</h3>
+                    <h3 class="text-left">All Genres</h3>
                   </div>
                   <div class="unit-body"><a class="icon icon-xl icon-circle icon-primary fa-plus" href="#" @click.prevent onclick="openModal(&quot;.add-genre-modal&quot;)"></a></div>
                 </div>
-              </div>
-              <div class="col-12">
-                <h3>All Genres</h3>
                 <div class="book-genres">
                   <ul class="book-genres-list">
                     <li class="book-genre" v-for="genre in genresAll"><a class="book-genre-link" :href="'#' + genre.name"># {{ genre.name }}</a><a class="book-genre-control book-genre-edit fa-edit" href="#" @click.prevent @click="editGenre(genre)" onclick="openModal(&quot;.edit-genre-modal&quot;)"></a><a class="book-genre-control book-genre-delete fa-trash-o" href="#" @click.prevent @click="deleteGenre(genre)"></a></li>
                   </ul>
                 </div>
               </div>
-            </div>
-            <hr>
-            <div class="row text-left row-30">
-              <div class="col-12">
+              <div class="col-lg-6">
                 <div class="unit align-items-center">
                   <div class="unit-left">
-                    <h3 class="text-left">Add New Author</h3>
+                    <h3 class="text-left">All Authors</h3>
                   </div>
                   <div class="unit-body"><a class="icon icon-xl icon-circle icon-primary fa-plus" href="#" @click.prevent onclick="openModal(&quot;.add-author-modal&quot;)"></a></div>
                 </div>
-              </div>
-              <div class="col-12">
-                <h3>All Authors</h3>
                 <div class="book-authors">
                   <ul class="book-author-list-inline">
                     <li v-for=" author in authorsAll "><span class="book-author-first-name">{{ author.firstName }}</span><span class="book-author-last-name">{{ author.lastName }}</span><a class="book-author-control book-author-edit fa-edit" href="#" @click.prevent @click="editAuthor(author)" onclick="openModal(&quot;.edit-author-modal&quot;)"></a><a class="book-author-control book-author-delete fa-trash-o" href="#" @click.prevent @click="deleteAuthor(author)"></a></li>
@@ -196,7 +191,7 @@
             <hr>
             <div class="unit align-items-center">
               <div class="unit-left">
-                <h3 class="text-left">Add New Book</h3>
+                <h3 class="text-left">All Books</h3>
               </div>
               <div class="unit-body"><a class="icon icon-xl icon-circle icon-primary fa-plus" href="#" @click.prevent onclick="openModal(&quot;.add-modal&quot;)"></a></div>
             </div>

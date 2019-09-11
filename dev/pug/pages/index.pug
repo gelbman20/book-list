@@ -14,11 +14,13 @@ block page
               label.form-label-outside( for='add-book-description' ) Enter Book Description
               input.form-input#add-book-description( type='text' @focus='focus(newBook.description, "#add-book-description")' @input='validate(newBook.description, "#add-book-description")' @blur='blur(newBook.description, "#add-book-description")' v-model='newBook.description' )
             .form-wrap
-              .checkbox-group( v-for='author in authorsAll' )
+              label.form-label-outside( for='checkbox-group' ) Check Author or Authors
+              .checkbox-group#checkbox-group( v-for='author in authorsAll' )
                 input( type='checkbox' :id='`checkbox-${author.id}`' :value='`${author.firstName} ${author.lastName}`' v-model='newBook.authors' )
                 label( :for='`checkbox-${author.id}`' ) {{ `${author.firstName} ${author.lastName}` }}
             .form-wrap
-              .checkbox-group( v-for='genre in genresAll' )
+              label.form-label-outside( for='checkbox-group-1' ) Check Genre or Genres
+              .checkbox-group#checkbox-group-1( v-for='genre in genresAll' )
                 input( type='checkbox' :id='`checkbox-genre-${genre.id}`' :value='`${genre.name}`' v-model='newBook.genres' )
                 label( :for='`checkbox-genre-${genre.id}`' ) {{ `${genre.name}` }}
             .form-wrap
@@ -37,11 +39,13 @@ block page
               label.form-label-outside( for='edit-book-description' ) Enter Book Description
               input.form-input#edit-book-description( type='text' v-model='editBook.description')
             .form-wrap
-              .checkbox-group( v-for='author in authorsAll' )
+              label.form-label-outside( for='checkbox-group-2' ) Check Author or Authors
+              .checkbox-group#checkbox-group-2( v-for='author in authorsAll' )
                 input( type='checkbox' :id='`checkbox-edit-${author.id}`' :value='`${author.firstName} ${author.lastName}`' v-model='editBook.authors' )
                 label( :for='`checkbox-edit-${author.id}`' ) {{ `${author.firstName} ${author.lastName}` }}
             .form-wrap
-              .checkbox-group( v-for='genre in genresAll' )
+              label.form-label-outside( for='checkbox-group-3' ) Check Author or Authors
+              .checkbox-group#checkbox-group-3( v-for='genre in genresAll' )
                 input( type='checkbox' :id='`checkbox-genre-edit-${genre.id}`' :value='`${genre.name}`' v-model='editBook.genres' )
                 label( :for='`checkbox-genre-edit-${genre.id}`' ) {{ `${genre.name}` }}
             .form-wrap
@@ -107,26 +111,21 @@ block page
         section.section.section-lg.bg-default.text-center
           .container
             h2 Book List
-            .row.row-30.text-left
-              .col-12
+            .row.row-50.text-left
+              .col-lg-6
                 .unit.align-items-center
-                  .unit-left: h3.text-left Add New Genre
+                  .unit-left: h3.text-left All Genres
                   .unit-body: a.icon.icon-xl.icon-circle.icon-primary.fa-plus(href='#' @click.prevent onclick='openModal(".add-genre-modal")')
-              .col-12
-                h3 All Genres
                 .book-genres
                   ul.book-genres-list: li.book-genre( v-for='genre in genresAll' )
                     a.book-genre-link(:href=  `'#' + genre.name`) # {{ genre.name }}
                     a.book-genre-control.book-genre-edit.fa-edit( href='#' @click.prevent @click='editGenre(genre)' onclick='openModal(".edit-genre-modal")' )
                     a.book-genre-control.book-genre-delete.fa-trash-o( href='#' @click.prevent @click='deleteGenre(genre)' )
-            hr
-            .row.text-left.row-30
-              .col-12
+
+              .col-lg-6
                 .unit.align-items-center
-                  .unit-left: h3.text-left Add New Author
+                  .unit-left: h3.text-left All Authors
                   .unit-body: a.icon.icon-xl.icon-circle.icon-primary.fa-plus(href='#' @click.prevent onclick='openModal(".add-author-modal")')
-              .col-12
-                h3 All Authors
                 .book-authors
                   ul.book-author-list-inline
                     li( v-for=' author in authorsAll ' )
@@ -138,7 +137,7 @@ block page
             hr
 
             .unit.align-items-center
-              .unit-left: h3.text-left Add New Book
+              .unit-left: h3.text-left All Books
               .unit-body: a.icon.icon-xl.icon-circle.icon-primary.fa-plus(href='#' @click.prevent onclick='openModal(".add-modal")')
             .row.row-30
               .col-md-6.col-lg-4( v-for='book in books' )
